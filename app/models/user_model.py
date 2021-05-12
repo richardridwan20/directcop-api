@@ -12,5 +12,4 @@ class User(Base):
     full_name = Column(String(100))
     hashed_password = Column(String(100))
     is_active = Column(Boolean, default=True)
-
-    items = relationship("Item", back_populates="owner")
+    user_license_id = Column(String(100))

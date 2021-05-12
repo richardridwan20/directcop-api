@@ -12,4 +12,3 @@ class User(Base):
     full_name = Column(String(100))
     hashed_password = Column(String(100))
     is_active = Column(Boolean, default=True)
-    user_license_id = Column(String(100))

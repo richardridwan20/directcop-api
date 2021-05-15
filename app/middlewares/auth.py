@@ -12,6 +12,7 @@ from app.schemas.user_schema import User
 from app.schemas.token_schema import TokenData
 from app.utils.hash import verify_hassing
 from app.usecases.user_service import UserService
+from app.usecases.user_license_service import UserLicenseService
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -68,8 +69,12 @@ async def get_current_user(
 
 
 async def get_current_active_user(
-            current_user: User = Depends(get_current_user)
+            current_user: User = Depends(get_current_user),
+            db: Session = Depends(get_db)
         ):
     if current_user.is_active != 1:
         raise HTTPException(status_code=400, detail="Inactive user")
+    user_license = UserLicenseService.read_by_user_id(db, user_id=current_user.id)
+    if user_license.status != 'active':
+        raise HTTPException(status_code=400, detail="Inactive license")
     return current_user

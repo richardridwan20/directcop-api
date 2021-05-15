@@ -68,3 +68,12 @@ class UserLicenseController():
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="User License not found")
         return usecase.delete(db=db, user_license_id=user_license.id)
+
+    @router.get(local_prefix+"validate/"+"{user_license_id}",
+                response_model=user_license_schema.UserLicense)
+    def validate_license(user_license_id: str, db: Session = Depends(deps.get_db)):
+        db_user_license = usecase.read_by_user_id(db, user_id=user_id)
+        if db_user_license.status == 'inactive':
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="User License is inactive, please contact administrator for details.")
+        return db_user_license

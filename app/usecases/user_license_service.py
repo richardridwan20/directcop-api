@@ -12,6 +12,9 @@ class UserLicenseService(ServiceInterface):
 
     def read(db: Session, user_license_id: str):
         return repository.read(db, user_license_id=user_license_id)
+    
+    def read_by_user_id(db: Session, user_id: str):
+        return repository.read_by_user_id(db, user_id=user_id)
 
     def create(db: Session,
                user_license: schema.UserLicenseCreate,

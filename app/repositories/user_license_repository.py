@@ -12,10 +12,15 @@ class UserLicenseRepository(RepositoryInterface):
             user_license_model.UserLicense
         ).offset(skip).limit(limit).all()
 
-    def read(db: Session, user_license_id: int):
+    def read(db: Session, user_license_id: str):
         return db.query(
             user_license_model.UserLicense
         ).filter(user_license_model.UserLicense.id == user_license_id).first()
+        
+    def read_by_user_id(db: Session, user_id: str):
+        return db.query(
+            user_license_model.UserLicense
+        ).filter(user_license_model.UserLicense.user_id == user_id).first()
 
     def create(
             db: Session,

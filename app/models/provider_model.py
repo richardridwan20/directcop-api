@@ -11,3 +11,4 @@ class Provider(Base):
     name = Column(String(100))
     slug = Column(String(100))
     url = Column(String(100))
+    is_active = Column(Boolean(), default=True)

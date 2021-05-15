@@ -1,34 +1,31 @@
-"""create users table
+"""create_providers_table
 
-Revision ID: 016712d9f3f4
-Revises:
-Create Date: 2020-10-15 15:53:00.114337
+Revision ID: fb20365823ac
+Revises: 016712d9f3f4
+Create Date: 2021-05-12 16:15:59.112086
 
 """
 from alembic import op
 import sqlalchemy as sa
 from app.utils.uuid import generate_uuid
-from app.utils.hash import create_hashing
-
 
 # revision identifiers, used by Alembic.
-revision = '016712d9f3f4'
-down_revision = None
+revision = 'fb20365823ac'
+down_revision = '016712d9f3f4'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
-    users = op.create_table(
-        'users',
+    providers = op.create_table(
+        'providers',
         sa.Column('id', sa.String(50), primary_key=True, index=True),
-        sa.Column('email', sa.String(100),
+        sa.Column('name', sa.String(100)),
+        sa.Column('slug', sa.String(100),
                   unique=True,
                   index=True,
                   nullable=False),
-        sa.Column('full_name', sa.String(100)),
-        sa.Column('hashed_password', sa.String(100), nullable=False),
-        sa.Column('is_active', sa.Boolean, default=True),
+        sa.Column('url', sa.String(200)),
         sa.Column('created_at', sa.DateTime(),
                   server_default=sa.func.current_timestamp(), nullable=False),
         sa.Column('updated_at', sa.DateTime(),
@@ -36,19 +33,18 @@ def upgrade():
     )
 
     uuid = generate_uuid()
-    password = create_hashing('Secret1234')
 
-    op.bulk_insert(users,
+    op.bulk_insert(providers,
                    [
                         {'id': uuid,
-                         'email': 'administrator@directcop.id',
-                         'full_name': 'Administrator',
-                         'hashed_password': password,
-                         'is_active': 1}
+                         'name': 'Nike',
+                         'slug': 'nike',
+                         'url': 'https://nike.com/sg'
+                        }
                     ])
     pass
 
 
 def downgrade():
-    op.drop_table('users')
+    op.drop_table('providers')
     pass

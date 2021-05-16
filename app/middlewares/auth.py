@@ -75,6 +75,8 @@ async def get_current_active_user(
     if current_user.is_active != 1:
         raise HTTPException(status_code=400, detail="Inactive user")
     user_license = UserLicenseService.read_by_user_id(db, user_id=current_user.id)
-    if user_license.status != 'active':
-        raise HTTPException(status_code=400, detail="Inactive license")
+    date = datetime.fromisoformat(user_license.end_date)
+    if datetime.now() > date:
+        raise HTTPException(status_code=400, detail="Expired license, please contact admistrator for further details")
+        
     return current_user

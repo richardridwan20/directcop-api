@@ -29,7 +29,6 @@ api.include_router(
 api.include_router(
     user_license_controller.router,
     tags=["user_licenses"],
-    dependencies=[Depends(auth.get_current_active_user)],
     responses={404: {"description": "Not found"}},
 )
 api.include_router(

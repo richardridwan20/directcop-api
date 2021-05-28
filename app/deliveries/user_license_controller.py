@@ -1,6 +1,6 @@
 from fastapi import Depends, APIRouter, HTTPException, status
 from typing import List
-from datetime import timedelta
+from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordRequestForm
 
 from sqlalchemy.orm import Session
@@ -69,11 +69,15 @@ class UserLicenseController():
                 status_code=status.HTTP_404_NOT_FOUND, detail="User License not found")
         return usecase.delete(db=db, user_license_id=user_license.id)
 
-    @router.get(local_prefix+"validate/"+"{user_license_id}",
+    @router.get(local_prefix+"validate/",
                 response_model=user_license_schema.UserLicense)
     def validate_license(user_license_id: str, db: Session = Depends(deps.get_db)):
-        db_user_license = usecase.read_by_user_id(db, user_id=user_id)
-        if db_user_license.status == 'inactive':
+        db_user_license = usecase.read(db, user_license_id=user_license_id)
+        if db_user_license is None:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="User License is inactive, please contact administrator for details.")
+                status_code=status.HTTP_404_NOT_FOUND, detail="User License not found")
+        date = datetime.fromisoformat(db_user_license.end_date)
+        if datetime.now() > date:
+            raise HTTPException(status_code=400, detail="Expired license, please contact admistrator for further details")
+        
         return db_user_license

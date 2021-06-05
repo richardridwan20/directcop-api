@@ -22,7 +22,7 @@ class UserProfileRepository(RepositoryInterface):
             user_profile: user_profile_schema.UserProfileCreate,
             user_id: str):
         uuid = generate_uuid()
-        db_user_profile = user_profile_model.UserProfile(**user_profile.dict(), id=uuid)
+        db_user_profile = user_profile_model.UserProfile(**user_profile.dict(), id=uuid, user_id=user_id)
         db.add(db_user_profile)
         db.commit()
         db.refresh(db_user_profile)

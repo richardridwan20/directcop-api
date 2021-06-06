@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import desc, asc
 
 from app.interfaces.api_interfaces import RepositoryInterface
 from app.models import user_license_model
@@ -7,10 +8,17 @@ from app.utils.uuid import generate_uuid
 
 class UserLicenseRepository(RepositoryInterface):
 
-    def reads(db: Session, skip: int = 0, limit: int = 100):
-        return db.query(
-            user_license_model.UserLicense
-        ).offset(skip).limit(limit).all()
+    def reads(db: Session, skip: int = 0, limit: int = 100, order: str = 'asc', sort: str = 'id'):
+        if order == 'asc':
+            return db.query(
+                user_license_model.UserLicense
+            ).order_by(asc(sort)).offset(skip).limit(limit).all()
+            pass
+        else:
+            return db.query(
+                user_license_model.UserLicense
+            ).order_by(desc(sort)).offset(skip).limit(limit).all()
+            pass
 
     def read(db: Session, user_license_id: str):
         return db.query(

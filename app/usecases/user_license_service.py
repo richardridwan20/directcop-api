@@ -7,8 +7,8 @@ from app.schemas import user_license_schema as schema
 
 class UserLicenseService(ServiceInterface):
 
-    def reads(db: Session, skip: int = 0, limit: int = 100):
-        return repository.reads(db, skip=skip, limit=limit)
+    def reads(db: Session, skip: int = 0, limit: int = 100, order: str = 'asc', sort: str = 'id'):
+        return repository.reads(db, skip=skip, limit=limit, order=order, sort=sort)
 
     def read(db: Session, user_license_id: str):
         return repository.read(db, user_license_id=user_license_id)

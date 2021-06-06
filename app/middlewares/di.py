@@ -7,3 +7,10 @@ async def common_parameters(
             limit: int = 100
         ):
     return {"q": q, "skip": skip, "limit": limit}
+
+async def paginate_parameters(
+            page: int = 1,
+            order: str = 'asc',
+            sort: str = 'id',
+        ):
+    return {"page": page, "order": order, "sort": sort}

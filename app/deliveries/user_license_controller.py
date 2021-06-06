@@ -39,12 +39,16 @@ class UserLicenseController():
                 response_model=List[user_license_schema.UserLicense])
     def read_user_licenses(
                 commons: dict = Depends(di.common_parameters),
-                db: Session = Depends(deps.get_db)
+                db: Session = Depends(deps.get_db),
+                paginate: dict = Depends(di.paginate_parameters)
             ):
+        skip = (paginate['page']-1) * commons['limit']
         user_licenses = usecase.reads(
                 db,
-                skip=commons['skip'],
-                limit=commons['limit']
+                skip=skip,
+                limit=commons['limit'],
+                order=paginate['order'],
+                sort=paginate['sort']
             )
         return user_licenses
 

@@ -3,11 +3,11 @@ from pydantic import BaseModel
 
 
 class UserLicenseBase(BaseModel):
-    license_type: str
-    start_date: str
-    end_date: str
-    status: str
-    user_id: str
+    license_type: Optional[str]
+    start_date: Optional[str]
+    end_date: Optional[str]
+    status: Optional[str]
+    user_id: Optional[str]
 
 
 class UserLicenseId(BaseModel):

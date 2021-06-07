@@ -6,7 +6,6 @@ class UserLicenseBase(BaseModel):
     license_type: Optional[str]
     start_date: Optional[str]
     end_date: Optional[str]
-    status: Optional[str]
     user_id: Optional[str]
 
 
@@ -27,6 +26,7 @@ class UserLicenseUpdate(BaseModel):
 
 class UserLicense(UserLicenseBase):
     id: str
+    status: Optional[str]
 
     class Config:
         orm_mode = True

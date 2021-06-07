@@ -12,12 +12,12 @@ class UserLicenseRepository(RepositoryInterface):
         if order == 'asc':
             return db.query(
                 user_license_model.UserLicense
-            ).order_by(asc(sort)).offset(skip).limit(limit).all()
+            ).filter(user_license_model.UserLicense.status != 'inactive').order_by(asc(sort)).offset(skip).limit(limit).all()
             pass
         else:
             return db.query(
                 user_license_model.UserLicense
-            ).order_by(desc(sort)).offset(skip).limit(limit).all()
+            ).filter(user_license_model.UserLicense.status != 'inactive').order_by(desc(sort)).offset(skip).limit(limit).all()
             pass
 
     def read(db: Session, user_license_id: str):
@@ -35,7 +35,7 @@ class UserLicenseRepository(RepositoryInterface):
             user_license: user_license_schema.UserLicenseCreate,
             user_id: str):
         uuid = generate_uuid()
-        db_user_license = user_license_model.UserLicense(**user_license.dict(), id=uuid)
+        db_user_license = user_license_model.UserLicense(**user_license.dict(), id=uuid, status='active')
         db.add(db_user_license)
         db.commit()
         db.refresh(db_user_license)

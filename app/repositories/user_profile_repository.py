@@ -7,9 +7,11 @@ from app.utils.uuid import generate_uuid
 
 class UserProfileRepository(RepositoryInterface):
 
-    def reads(db: Session, skip: int = 0, limit: int = 100):
+    def reads(db: Session, skip: int = 0, limit: int = 100, user_id: str = None):
         return db.query(
             user_profile_model.UserProfile
+        ).filter(
+            user_profile_model.UserProfile.user_id == user_id
         ).offset(skip).limit(limit).all()
 
     def read(db: Session, user_profile_id: int):

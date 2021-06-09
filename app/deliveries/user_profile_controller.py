@@ -35,16 +35,18 @@ class UserProfileController():
                 status_code=status.HTTP_404_NOT_FOUND, detail="User Profile not found")
         return usecase.update(db=db, user_profile=user_profile, user_profile_id=user_profile_id)
 
-    @router.get(local_prefix,
+    @router.get(local_prefix+"filter/"+"{user_id}",
                 response_model=List[user_profile_schema.UserProfile])
     def read_user_profiles(
+                user_id: str,
                 commons: dict = Depends(di.common_parameters),
                 db: Session = Depends(deps.get_db)
             ):
         user_profiles = usecase.reads(
                 db,
                 skip=commons['skip'],
-                limit=commons['limit']
+                limit=commons['limit'],
+                user_id=user_id
             )
         return user_profiles
 

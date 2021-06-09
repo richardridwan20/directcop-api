@@ -7,8 +7,8 @@ from app.schemas import user_profile_schema as schema
 
 class UserProfileService(ServiceInterface):
 
-    def reads(db: Session, skip: int = 0, limit: int = 100):
-        return repository.reads(db, skip=skip, limit=limit)
+    def reads(db: Session, skip: int = 0, limit: int = 100, user_id: str = None):
+        return repository.reads(db, skip=skip, limit=limit, user_id=user_id)
 
     def read(db: Session, user_profile_id: str):
         return repository.read(db, user_profile_id=user_profile_id)

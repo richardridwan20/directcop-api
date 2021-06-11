@@ -19,6 +19,7 @@ class UserProfileBase(BaseModel):
     card_cvv: Optional[str]
     address_2: Optional[str]
     address_3: Optional[str]
+    profile_name: Optional[str]
 
 
 class UserProfileId(BaseModel):
@@ -41,14 +42,16 @@ class UserProfileCreate(BaseModel):
     card_cvv: Optional[str]
     address_2: Optional[str]
     address_3: Optional[str]
+    profile_name: Optional[str]
     pass
 
 class UserProfileUpdate(UserProfileBase):
     pass
 
 
-class UserProfile(UserProfileBase):
+class UserProfile(BaseModel):
     id: str
+    profile_name: str
 
     class Config:
         orm_mode = True

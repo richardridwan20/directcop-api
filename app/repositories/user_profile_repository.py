@@ -44,7 +44,8 @@ class UserProfileRepository(RepositoryInterface):
             user_profile_model.UserProfile.postal_code: user_profile.postal_code,
             user_profile_model.UserProfile.city: user_profile.city,
             user_profile_model.UserProfile.phone_number: user_profile.phone_number,
-            user_profile_model.UserProfile.email: user_profile.email
+            user_profile_model.UserProfile.email: user_profile.email,
+            user_profile_model.UserProfile.profile_name: user_profile.profile_name
         })
 
         db.commit()

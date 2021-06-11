@@ -24,3 +24,4 @@ class UserProfile(Base):
     card_cvv = Column(String(50))
     address_2 = Column(String(300))
     address_3 = Column(String(300))
+    profile_name = Column(String(200))

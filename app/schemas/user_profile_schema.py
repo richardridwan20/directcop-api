@@ -49,7 +49,7 @@ class UserProfileUpdate(UserProfileBase):
     pass
 
 
-class UserProfile(BaseModel):
+class UserProfile(UserProfileBase):
     id: str
     profile_name: str
 

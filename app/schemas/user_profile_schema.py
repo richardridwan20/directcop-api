@@ -35,7 +35,7 @@ class UserProfileCreate(BaseModel):
     city: Optional[str]
     phone_number: Optional[str]
     email: Optional[str]
-    is_active: Optional[bool]
+    is_active: Optional[bool] = True
     card_name: Optional[str]
     card_number: Optional[str]
     card_expiry_date: Optional[str]

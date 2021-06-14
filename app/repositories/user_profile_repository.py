@@ -11,7 +11,8 @@ class UserProfileRepository(RepositoryInterface):
         return db.query(
             user_profile_model.UserProfile
         ).filter(
-            user_profile_model.UserProfile.user_id == user_id
+            user_profile_model.UserProfile.user_id == user_id,
+            user_profile_model.UserProfile.is_active != False,
         ).offset(skip).limit(limit).all()
 
     def read(db: Session, user_profile_id: int):
@@ -45,6 +46,10 @@ class UserProfileRepository(RepositoryInterface):
             user_profile_model.UserProfile.city: user_profile.city,
             user_profile_model.UserProfile.phone_number: user_profile.phone_number,
             user_profile_model.UserProfile.email: user_profile.email,
+            user_profile_model.UserProfile.card_cvv: user_profile.card_cvv,
+            user_profile_model.UserProfile.card_expiry_date: user_profile.card_expiry_date,
+            user_profile_model.UserProfile.card_name: user_profile.card_name,
+            user_profile_model.UserProfile.card_number: user_profile.card_number,
             user_profile_model.UserProfile.profile_name: user_profile.profile_name
         })
 

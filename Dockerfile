@@ -1,23 +1,21 @@
-FROM python:3.8-alpine
+FROM python:3.8-slim
 
 ENV PYTHONUNBUFFERED 1
 
 # EXPOSE $APP_PORT
 WORKDIR /app
 
+RUN apt-get update \
+        && apt-get install gcc -y \
+        && apt-get install libc-dev -y \
+        && apt-get install default-mysql-server -y \
+        && apt-get install default-libmysqlclient-dev -y \
+        && apt-get install python3-dev  -y \
+        && apt-get install openssl -y \
+        && apt-get install libssl-dev -y \
+        && apt-get install build-essential -y \
+        && apt-get clean
 
-RUN set -e; \
-        apk add --no-cache --virtual .build-deps \
-                gcc \
-                libc-dev \
-                linux-headers \
-                mysql-dev \
-                python3-dev \
-                libffi-dev \
-                openssl-dev \
-        ;
-
-RUN apk add build-base
 RUN /usr/local/bin/python -m pip install --upgrade pip
 
 COPY . ./

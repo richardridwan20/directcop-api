@@ -9,11 +9,6 @@ on:
       - '*'
     paths:
     - '**.py'
-#   push:
-#     branches: 
-#       - '*'
-#     paths:
-#     - '**.py'
 
 jobs:
   build:

@@ -20,6 +20,8 @@ class UserProfileBase(BaseModel):
     address_2: Optional[str]
     address_3: Optional[str]
     profile_name: Optional[str]
+    country: Optional[str]
+    province: Optional[str]
 
 
 class UserProfileId(BaseModel):
@@ -43,6 +45,8 @@ class UserProfileCreate(BaseModel):
     address_2: Optional[str]
     address_3: Optional[str]
     profile_name: Optional[str]
+    country: Optional[str]
+    province: Optional[str]
     pass
 
 class UserProfileUpdate(UserProfileBase):

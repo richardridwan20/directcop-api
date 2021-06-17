@@ -50,7 +50,9 @@ class UserProfileRepository(RepositoryInterface):
             user_profile_model.UserProfile.card_expiry_date: user_profile.card_expiry_date,
             user_profile_model.UserProfile.card_name: user_profile.card_name,
             user_profile_model.UserProfile.card_number: user_profile.card_number,
-            user_profile_model.UserProfile.profile_name: user_profile.profile_name
+            user_profile_model.UserProfile.profile_name: user_profile.profile_name,
+            user_profile_model.UserProfile.country: user_profile.country,
+            user_profile_model.UserProfile.province: user_profile.province,
         })
 
         db.commit()

@@ -25,3 +25,5 @@ class UserProfile(Base):
     address_2 = Column(String(300))
     address_3 = Column(String(300))
     profile_name = Column(String(200))
+    country = Column(String(200))
+    province = Column(String(200))

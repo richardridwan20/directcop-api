@@ -71,16 +71,24 @@ class UserController():
                 status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         return usecase.update(db=db, user=user, user_id=user_id)
 
-    @router.get(local_prefix, response_model=List[user_schema.User])
+    @router.get(local_prefix, response_model=user_schema.UserPaginate)
     def read_users(
             commons: dict = Depends(di.common_parameters),
-            active: bool = True,
             db: Session = Depends(deps.get_db),
+            filters: dict = Depends(di.filter_parameters),
+            paginate: dict = Depends(di.paginate_parameters),
             current_user: user_schema.User = Depends(
                 auth.get_current_active_user)
             ):
         users = usecase.reads(
-            db, skip=commons['skip'], limit=commons['limit'], active=active)
+                db,
+                skip=commons['skip'],
+                limit=commons['limit'],
+                order=paginate['order'],
+                filter_field=filters['filter_field'],
+                filter_value=filters['filter_value'],
+                sort=paginate['sort']
+            )
         return users
 
     @router.get(local_prefix+"{user_id}", response_model=user_schema.User)

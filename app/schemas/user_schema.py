@@ -1,4 +1,6 @@
-from typing import Optional
+from typing import Optional, List
+from .general_schema import Meta
+from datetime import datetime
 
 from pydantic import BaseModel
 
@@ -13,6 +15,8 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: str
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
     is_active: Optional[bool] = 1
 
     class Config:
@@ -25,3 +29,7 @@ class UserId(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
+
+class UserPaginate(BaseModel):
+    data: List[User]
+    meta: Meta

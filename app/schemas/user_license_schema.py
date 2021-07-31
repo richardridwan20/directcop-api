@@ -1,6 +1,7 @@
 from typing import Optional, List
 from pydantic import BaseModel
 from .general_schema import Meta
+from datetime import datetime
 
 class UserLicenseBase(BaseModel):
     license_type: Optional[str]
@@ -26,6 +27,8 @@ class UserLicenseUpdate(BaseModel):
 
 class UserLicense(UserLicenseBase):
     id: str
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
     status: Optional[str]
 
     class Config:

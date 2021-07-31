@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
-
+from .general_schema import Meta
 
 class UserLicenseBase(BaseModel):
     license_type: Optional[str]
@@ -30,3 +30,7 @@ class UserLicense(UserLicenseBase):
 
     class Config:
         orm_mode = True
+        
+class UserLicensePaginate(BaseModel):
+    data: List[UserLicense]
+    meta: Meta

@@ -36,18 +36,20 @@ class UserLicenseController():
         return usecase.update(db=db, user_license=user_license, user_license_id=user_license_id)
 
     @router.get(local_prefix,
-                response_model=List[user_license_schema.UserLicense])
+                response_model=user_license_schema.UserLicensePaginate)
     def read_user_licenses(
                 commons: dict = Depends(di.common_parameters),
                 db: Session = Depends(deps.get_db),
+                filters: dict = Depends(di.filter_parameters),
                 paginate: dict = Depends(di.paginate_parameters)
             ):
-        skip = (paginate['page']-1) * commons['limit']
         user_licenses = usecase.reads(
                 db,
-                skip=skip,
+                skip=commons['skip'],
                 limit=commons['limit'],
                 order=paginate['order'],
+                filter_field=filters['filter_field'],
+                filter_value=filters['filter_value'],
                 sort=paginate['sort']
             )
         return user_licenses

@@ -17,3 +17,9 @@ class Validation(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Meta(BaseModel):
+    page_size: int
+    page_number: int
+    num_pages: int
+    total_results: int

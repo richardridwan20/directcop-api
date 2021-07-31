@@ -52,6 +52,7 @@ class UserRepository(RepositoryInterface):
             user_model.User.full_name: user.full_name,
             user_model.User.email: user.email,
             user_model.User.hashed_password: hashpass,
+            user_model.User.is_active: user.is_active
         })
         db.commit()
         return db.query(
